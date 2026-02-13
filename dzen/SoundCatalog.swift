@@ -28,7 +28,6 @@ struct Sound: Identifiable {
         Sound(id: "dutch_neighborhood", displayName: "Dutch Neighborhood", fileName: "dutch_neighborhood_audio", category: .city),
         Sound(id: "moscow_subway", displayName: "Moscow Subway", fileName: "moscow_subway_audio", category: .city),
         Sound(id: "nyc_subway", displayName: "NYC Subway", fileName: "nyc_subway_audio", category: .city),
-        Sound(id: "subway", displayName: "Subway", fileName: "subway", category: .city),
         Sound(id: "yamanote_line", displayName: "Yamanote Line", fileName: "yamanote_line_audio", category: .city),
         Sound(id: "yerevan_metro", displayName: "Yerevan Metro", fileName: "yerevanskoe_metro_audio", category: .city),
 

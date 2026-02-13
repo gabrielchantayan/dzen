@@ -1,1 +1,2 @@
-build/dzen.app/Contents
+build
+.DS_Store

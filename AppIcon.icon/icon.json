@@ -1,0 +1,53 @@
+{
+  "fill" : {
+    "linear-gradient" : [
+      "display-p3:0.18875,0.80156,0.62033,1.00000",
+      "display-p3:0.28128,0.61463,0.78576,1.00000"
+    ],
+    "orientation" : {
+      "start" : {
+        "x" : 0.5,
+        "y" : 0
+      },
+      "stop" : {
+        "x" : 0.5,
+        "y" : 0.7
+      }
+    }
+  },
+  "groups" : [
+    {
+      "layers" : [
+        {
+          "fill" : {
+            "solid" : "display-p3:0.93032,0.95166,0.96783,1.00000"
+          },
+          "glass" : true,
+          "image-name" : "app-icon.svg",
+          "name" : "app-icon",
+          "position" : {
+            "scale" : 1.8,
+            "translation-in-points" : [
+              0,
+              0
+            ]
+          }
+        }
+      ],
+      "shadow" : {
+        "kind" : "neutral",
+        "opacity" : 0.5
+      },
+      "translucency" : {
+        "enabled" : true,
+        "value" : 0.5
+      }
+    }
+  ],
+  "supported-platforms" : {
+    "circles" : [
+      "watchOS"
+    ],
+    "squares" : "shared"
+  }
+}

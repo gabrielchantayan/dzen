@@ -74,16 +74,23 @@ struct ContentView: View {
             .font(.caption)
             .foregroundStyle(.secondary)
 
-            if updateChecker.updateAvailable {
-                Link("Update available", destination: URL(string: "https://github.com/gabrielchantayan/dzen/releases/latest")!)
-                    .font(.caption)
-                    .foregroundStyle(.yellow)
-            }
-
             HStack {
-                Text("v\(version)")
+                if updateChecker.updateAvailable {
+                    Link(destination: URL(string: "https://github.com/gabrielchantayan/dzen/releases/latest")!) {
+                        HStack(spacing: 4) {
+                            Image(systemName: "exclamationmark.triangle.fill")
+                            Text("Update available")
+                            Text("(v\(version) → v\(updateChecker.remoteVersionString))")
+                                .foregroundStyle(Color(red: 0.96, green: 0.70, blue: 0.17).opacity(0.7))
+                        }
+                    }
                     .font(.caption2)
-                    .foregroundStyle(.tertiary)
+                    .foregroundStyle(Color(red: 0.96, green: 0.70, blue: 0.17))
+                } else {
+                    Text("v\(version)")
+                        .font(.caption2)
+                        .foregroundStyle(.tertiary)
+                }
                 Spacer()
                 Button("Quit") { NSApplication.shared.terminate(nil) }
                     .buttonStyle(.plain)

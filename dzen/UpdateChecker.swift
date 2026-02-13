@@ -4,6 +4,7 @@ import Observation
 @Observable
 final class UpdateChecker {
     var updateAvailable = false
+    var remoteVersionString = ""
 
     private var timer: Timer?
 
@@ -31,6 +32,7 @@ final class UpdateChecker {
             let localMinor = parts.count > 1 ? parts[1] : 0
             await MainActor.run {
                 updateAvailable = (remote.major, remote.minor) > (localMajor, localMinor)
+                remoteVersionString = "\(remote.major).\(remote.minor)"
             }
         } catch {
             // Silently ignore — no update banner on failure

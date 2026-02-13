@@ -58,12 +58,31 @@ struct ContentView: View {
         }
     }
 
+    private var version: String {
+        Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0"
+    }
+
     private var footer: some View {
-        HStack {
-            Spacer()
-            Button("Quit") { NSApplication.shared.terminate(nil) }
-                .buttonStyle(.plain)
-                .foregroundStyle(.secondary)
+        VStack(spacing: 4) {
+            HStack(spacing: 4) {
+                Text("Made by")
+                Link("Gabe Chantayan", destination: URL(string: "https://gabech.com")!)
+                Text("·")
+                Link("GitHub", destination: URL(string: "https://github.com/gabrielchantayan/dzen")!)
+            }
+            .font(.caption)
+            .foregroundStyle(.secondary)
+
+            HStack {
+                Text("v\(version)")
+                    .font(.caption2)
+                    .foregroundStyle(.tertiary)
+                Spacer()
+                Button("Quit") { NSApplication.shared.terminate(nil) }
+                    .buttonStyle(.plain)
+                    .foregroundStyle(.secondary)
+                    .font(.caption)
+            }
         }
         .padding(.horizontal)
         .padding(.vertical, 8)
@@ -94,15 +113,24 @@ struct SoundRowView: View {
     var engine: AudioEngine
 
     private var isActive: Bool { engine.isPlaying(sound.id) }
+    private var isLoading: Bool { engine.isLoading(sound.id) }
 
     var body: some View {
         HStack(spacing: 8) {
             Button { engine.toggle(sound) } label: {
-                Image(systemName: isActive ? "speaker.wave.2.fill" : "speaker.slash.fill")
-                    .foregroundStyle(isActive ? .primary : .tertiary)
-                    .frame(width: 20)
+                Group {
+                    if isLoading {
+                        ProgressView()
+                            .controlSize(.small)
+                    } else {
+                        Image(systemName: isActive ? "speaker.wave.2.fill" : "speaker.slash.fill")
+                            .foregroundStyle(isActive ? .primary : .tertiary)
+                    }
+                }
+                .frame(width: 20)
             }
             .buttonStyle(.plain)
+            .disabled(isLoading)
 
             Text(sound.displayName)
                 .foregroundStyle(isActive ? .primary : .secondary)

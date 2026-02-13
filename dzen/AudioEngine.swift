@@ -8,6 +8,7 @@ final class AudioEngine {
     }
 
     private(set) var activeSounds: Set<String> = []
+    private(set) var loadingSounds: Set<String> = []
     private var volumes: [String: Float] = [:]
 
     private let engine = AVAudioEngine()
@@ -31,6 +32,10 @@ final class AudioEngine {
         players[id]?.volume = value
     }
 
+    func isLoading(_ id: String) -> Bool {
+        loadingSounds.contains(id)
+    }
+
     func toggle(_ sound: Sound) {
         if activeSounds.contains(sound.id) {
             stop(sound)
@@ -47,14 +52,44 @@ final class AudioEngine {
     }
 
     private func play(_ sound: Sound) {
-        let player = ensureLoaded(sound)
+        if players[sound.id] != nil {
+            startPlayer(sound)
+            return
+        }
+
+        loadingSounds.insert(sound.id)
+
+        Task.detached { [self] in
+            let url = Bundle.main.url(forResource: sound.fileName, withExtension: "mp3")!
+            let file = try! AVAudioFile(forReading: url)
+            let format = file.processingFormat
+            let buffer = AVAudioPCMBuffer(pcmFormat: format, frameCapacity: AVAudioFrameCount(file.length))!
+            try! file.read(into: buffer)
+
+            await MainActor.run {
+                let player = AVAudioPlayerNode()
+                engine.attach(player)
+                engine.connect(player, to: engine.mainMixerNode, format: format)
+
+                players[sound.id] = player
+                buffers[sound.id] = buffer
+                if volumes[sound.id] == nil { volumes[sound.id] = 0.5 }
+
+                loadingSounds.remove(sound.id)
+                startPlayer(sound)
+            }
+        }
+    }
+
+    private func startPlayer(_ sound: Sound) {
+        guard let player = players[sound.id], let buffer = buffers[sound.id] else { return }
 
         if !engine.isRunning {
             try? engine.start()
         }
 
         player.stop()
-        player.scheduleBuffer(buffers[sound.id]!, at: nil, options: .loops)
+        player.scheduleBuffer(buffer, at: nil, options: .loops)
         player.volume = volumes[sound.id] ?? 0.5
         player.play()
         activeSounds.insert(sound.id)

@@ -1,17 +1,13 @@
-//
-//  dzenApp.swift
-//  dzen
-//
-//  Created by Gabe Chantayan on 2/12/26.
-//
-
 import SwiftUI
 
 @main
 struct dzenApp: App {
+    @State private var engine = AudioEngine()
+
     var body: some Scene {
-        WindowGroup {
-            ContentView()
+        MenuBarExtra("dzen", systemImage: "waveform") {
+            ContentView(engine: engine)
         }
+        .menuBarExtraStyle(.window)
     }
 }

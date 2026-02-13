@@ -8,6 +8,14 @@
   - Wind
   - Line 2 Toronto
 
+## v1.2 (2026-02-12)
+
+**Fixes**
+- No longer auto-selects the "Stop All" button
+
+**Removals**
+- Delete unknown "subway" audio
+
 ## v1.1 (2026-02-12) 
 
 - Add update checking

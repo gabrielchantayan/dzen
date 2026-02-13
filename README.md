@@ -3,7 +3,7 @@
 _Background sounds for your life_
 
 
-![Version](https://img.shields.io/badge/Version_1.1-006A4E)   [![Changelog](https://img.shields.io/badge/Changelog-darkslateblue)](CHANGELOG.md)
+![Version](https://img.shields.io/badge/Version_1.2-006A4E)   [![Changelog](https://img.shields.io/badge/Changelog-darkslateblue)](CHANGELOG.md)
 
 
 <p align="center">

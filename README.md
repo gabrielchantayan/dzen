@@ -21,7 +21,7 @@ app that lets you play background sounds while you do whatever.
 
 ## Installation
 
-Download the [latest release](https://github.com/gabebw/dzen/releases/latest) and drag the app to your applications folder.
+Download the [latest release](https://github.com/gabrielchantayan/dzen/releases/latest) and drag the app to your applications folder.
 
 ## FAQ
 

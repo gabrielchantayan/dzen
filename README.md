@@ -3,9 +3,7 @@
 _Background sounds for your life_
 
 
-<p align="center">
 ![v1](https://img.shields.io/badge/Version_1.0-006A4E)   [![Changelog](https://img.shields.io/badge/Changelog-darkslateblue)](CHANGELOG.md)
-</p>
 
 
 <p align="center">

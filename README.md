@@ -2,10 +2,10 @@
 
 _Background sounds for your life_
 
-[v1](https://img.shields.io/badge/Version_1.0-oldlace) [![Changelog](https://img.shields.io/badge/Changelog-ff69b4)](CHANGELOG.md)
+![v1](https://img.shields.io/badge/Version_1.0-oldlace)   [![Changelog](https://img.shields.io/badge/Changelog-ff69b4)](CHANGELOG.md)
 
 <p align="center">
-    <img src="_gh/dzen-v1-ss.png" alt="dzen" width="45%" />
+    <img src="_gh/dzen-v1-ss.png" alt="dzen" width="25%" />
 </p>
 
 **Dzen**, from the Armenian word **ձեն** (meaning "sound") is a MacOS menu bar 

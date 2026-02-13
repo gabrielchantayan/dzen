@@ -15,6 +15,7 @@ struct ContentView: View {
             footer
         }
         .frame(width: 280, height: 500)
+        .focusEffectDisabled()
     }
 
     private var header: some View {

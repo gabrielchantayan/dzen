@@ -3,6 +3,7 @@ import AppKit
 
 struct ContentView: View {
     var engine: AudioEngine
+    var updateChecker: UpdateChecker
 
     var body: some View {
         VStack(spacing: 0) {
@@ -72,6 +73,12 @@ struct ContentView: View {
             }
             .font(.caption)
             .foregroundStyle(.secondary)
+
+            if updateChecker.updateAvailable {
+                Link("Update available", destination: URL(string: "https://github.com/gabrielchantayan/dzen/releases/latest")!)
+                    .font(.caption)
+                    .foregroundStyle(.yellow)
+            }
 
             HStack {
                 Text("v\(version)")

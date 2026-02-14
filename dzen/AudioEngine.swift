@@ -45,10 +45,20 @@ final class AudioEngine {
     }
 
     func stopAll() {
-        for id in activeSounds {
-            players[id]?.stop()
+        loadingSounds.removeAll()
+
+        for (_, player) in players {
+            player.stop()
+            engine.detach(player)
         }
+
+        players.removeAll()
+        buffers.removeAll()
         activeSounds.removeAll()
+
+        if engine.isRunning {
+            engine.stop()
+        }
     }
 
     private func play(_ sound: Sound) {
@@ -67,6 +77,8 @@ final class AudioEngine {
             try! file.read(into: buffer)
 
             await MainActor.run {
+                guard loadingSounds.contains(sound.id) else { return }
+
                 let player = AVAudioPlayerNode()
                 engine.attach(player)
                 engine.connect(player, to: engine.mainMixerNode, format: format)
@@ -96,30 +108,19 @@ final class AudioEngine {
     }
 
     private func stop(_ sound: Sound) {
-        players[sound.id]?.stop()
-        activeSounds.remove(sound.id)
-    }
+        loadingSounds.remove(sound.id)
 
-    @discardableResult
-    private func ensureLoaded(_ sound: Sound) -> AVAudioPlayerNode {
         if let player = players[sound.id] {
-            return player
+            player.stop()
+            engine.detach(player)
         }
 
-        let url = Bundle.main.url(forResource: sound.fileName, withExtension: "mp3")!
-        let file = try! AVAudioFile(forReading: url)
-        let format = file.processingFormat
-        let buffer = AVAudioPCMBuffer(pcmFormat: format, frameCapacity: AVAudioFrameCount(file.length))!
-        try! file.read(into: buffer)
+        players.removeValue(forKey: sound.id)
+        buffers.removeValue(forKey: sound.id)
+        activeSounds.remove(sound.id)
 
-        let player = AVAudioPlayerNode()
-        engine.attach(player)
-        engine.connect(player, to: engine.mainMixerNode, format: format)
-
-        players[sound.id] = player
-        buffers[sound.id] = buffer
-        if volumes[sound.id] == nil { volumes[sound.id] = 0.5 }
-
-        return player
+        if activeSounds.isEmpty && engine.isRunning {
+            engine.stop()
+        }
     }
 }

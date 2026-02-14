@@ -8,6 +8,11 @@
   - Wind
   - Line 2 Toronto
 
+## v1.3 (2026-02-14)
+
+**Fixes**
+- Fix memory hogging issue
+
 ## v1.2 (2026-02-12)
 
 **Fixes**
